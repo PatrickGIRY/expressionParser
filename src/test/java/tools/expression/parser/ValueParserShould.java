@@ -14,7 +14,7 @@ public class ValueParserShould {
     @ParameterizedTest
     @ValueSource(strings = {"2", "3"})
     void create_a_value_from_the_given_expression(String expression) {
-        final ItemParser itemParser = input -> Optional.of(new Success(input.charAt(0)));
+        final ItemParser itemParser = input -> Optional.of(new Success(input));
         final var parser = ValueParser.create(itemParser);
 
         final  var result = parser.tryParse(expression);

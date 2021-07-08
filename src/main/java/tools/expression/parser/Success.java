@@ -1,4 +1,4 @@
 package tools.expression.parser;
 
-public record Success(char character) {
+public record Success(String value) {
 }

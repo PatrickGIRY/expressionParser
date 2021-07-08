@@ -5,8 +5,8 @@ import tools.expression.domain.Value;
 import java.util.Optional;
 
 public interface ExpressionParser {
-    static ExpressionParser create() {
-        return input -> Optional.of(new Value(2));
+    static ExpressionParser create(ValueParser valueParser) {
+        return valueParser::tryParse;
     }
 
     Optional<Value> tryParse(String expression);

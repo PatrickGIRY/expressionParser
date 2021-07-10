@@ -16,4 +16,17 @@ class ParserShould {
 
         assertThat(result).isEmpty();
     }
+
+    @Test
+    void always_return_success_with_givne_code_point_ans_input_as_remaining_with_parser_value_of() {
+
+        final int codePoint = 'a';
+        final var parser = Parser.<CodePointSuccess>valueOf(codePoint);
+        final var input = "bcd";
+
+        final var result = parser.tryParse(input);
+
+        final var remaining = new Remaining(0, input);
+        assertThat(result).hasValue(new CodePointSuccess(codePoint, remaining));
+    }
 }

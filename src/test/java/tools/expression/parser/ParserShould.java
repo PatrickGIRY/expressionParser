@@ -79,5 +79,17 @@ class ParserShould {
 
             assertThatThrownBy(() -> parser.tryParse(NULL_INPUT)).isInstanceOf(NullPointerException.class);
         }
+
+      /*  @Test
+        void sequence_two_item_parser() {
+            final var parser = Parser.item().flatMap(is -> Parser.item());
+
+            final var input = "ab";
+
+            final var result = parser.tryParse(input);
+
+            final var remaining = new Remaining(2, input);
+            assertThat(result).hasValue(new IntSuccess(input.charAt(1), remaining));
+        } */
     }
 }

@@ -1,6 +1,7 @@
 package tools.expression.parser;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
@@ -27,4 +28,8 @@ public interface Parser<T> {
     }
 
     Optional<T> tryParse(String input);
+
+    default <R> Parser<R> flatMap(Function<T, Optional<R>> mapper) {
+        return null;
+    }
 }

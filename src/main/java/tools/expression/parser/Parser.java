@@ -18,9 +18,12 @@ public interface Parser<T> {
     }
 
     static Parser<IntSuccess> item() {
-        return input -> input.isEmpty()
-                ? Optional.empty()
-                : IntSuccess.create(input.charAt(0), 1, input);
+        return input -> {
+            requireNonNull(input);
+            return input.isEmpty()
+                    ? Optional.empty()
+                    : IntSuccess.create(input.charAt(0), 1, input);
+        };
     }
 
     Optional<T> tryParse(String input);

@@ -72,5 +72,12 @@ class ParserShould {
             final var remaining = new Remaining(1, input);
             assertThat(result).hasValue(new IntSuccess(input.charAt(0), remaining));
         }
+
+        @Test
+        void throw_NullPointerException_when_input_is_null() {
+            final var parser = Parser.item();
+
+            assertThatThrownBy(() -> parser.tryParse(NULL_INPUT)).isInstanceOf(NullPointerException.class);
+        }
     }
 }

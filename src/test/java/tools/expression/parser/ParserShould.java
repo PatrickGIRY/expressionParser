@@ -18,7 +18,7 @@ class ParserShould {
     }
 
     @Test
-    void always_return_success_with_givne_code_point_ans_input_as_remaining_with_parser_value_of() {
+    void always_return_success_with_given_code_point_ans_input_as_remaining_with_parser_value_of() {
 
         final int codePoint = 'a';
         final var parser = Parser.<CodePointSuccess>valueOf(codePoint);

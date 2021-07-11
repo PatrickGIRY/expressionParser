@@ -18,15 +18,15 @@ class ParserShould {
     }
 
     @Test
-    void always_return_success_with_given_code_point_ans_input_as_remaining_with_parser_value_of() {
+    void always_return_success_with_given_code_point_and_input_at_index_0_as_remaining_with_parser_value_of() {
 
         final int codePoint = 'a';
-        final var parser = Parser.<CodePointSuccess>valueOf(codePoint);
+        final var parser = Parser.valueOf(codePoint);
         final var input = "bcd";
 
         final var result = parser.tryParse(input);
 
         final var remaining = new Remaining(0, input);
-        assertThat(result).hasValue(new CodePointSuccess(codePoint, remaining));
+        assertThat(result).hasValue(new IntSuccess(codePoint, remaining));
     }
 }

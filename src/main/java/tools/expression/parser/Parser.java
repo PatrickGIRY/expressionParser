@@ -8,8 +8,8 @@ public interface Parser<T> {
         return __ -> Optional.empty();
     }
 
-    static Parser<CodePointSuccess> valueOf(int codePoint) {
-        return input -> Optional.of(new CodePointSuccess(codePoint, new Remaining(0, input)));
+    static Parser<IntSuccess> valueOf(int codePoint) {
+        return input -> Optional.of(new IntSuccess(codePoint, new Remaining(0, input)));
     }
 
     Optional<T> tryParse(String input);

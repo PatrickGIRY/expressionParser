@@ -1,6 +1,9 @@
 package tools.expression.parser;
 
+import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 @FunctionalInterface
 public interface Parser<T> {
@@ -9,7 +12,10 @@ public interface Parser<T> {
     }
 
     static Parser<IntSuccess> valueOf(int codePoint) {
-        return input -> Optional.of(new IntSuccess(codePoint, new Remaining(0, input)));
+        return input -> {
+            requireNonNull(input);
+            return Optional.of(new IntSuccess(codePoint, new Remaining(0, input)));
+        };
     }
 
     static Parser<IntSuccess> item() {

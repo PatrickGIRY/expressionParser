@@ -4,8 +4,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParserShould {
+
+    private static final String NULL_INPUT = null;
 
     @Nested
     class with_failure_parser {
@@ -38,6 +41,13 @@ class ParserShould {
             assertThat(result).hasValue(new IntSuccess(codePoint, remaining));
         }
 
+        @Test
+        void throw_NullPointException_when_input_is_null() {
+            final int codePoint = 'a';
+            final var parser = Parser.valueOf(codePoint);
+
+            assertThatThrownBy(() -> parser.tryParse(NULL_INPUT));
+        }
     }
 
     @Nested

@@ -40,4 +40,16 @@ class ParserShould {
 
     }
 
+    @Nested
+    class  with_item_parser {
+
+        @Test
+        void return_empty_with_empty_input() {
+            final var parser = Parser.item();
+
+            final var result = parser.tryParse("");
+
+            assertThat(result).isEmpty();
+        }
+    }
 }

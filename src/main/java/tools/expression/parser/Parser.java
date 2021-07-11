@@ -12,5 +12,9 @@ public interface Parser<T> {
         return input -> Optional.of(new IntSuccess(codePoint, new Remaining(0, input)));
     }
 
+    static Parser<IntSuccess> item() {
+        return failure();
+    }
+
     Optional<T> tryParse(String input);
 }

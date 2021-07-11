@@ -61,5 +61,16 @@ class ParserShould {
 
             assertThat(result).isEmpty();
         }
+
+        @Test
+        void return_first_character_and_remaining_when_input_is_not_empty() {
+            final var parser = Parser.item();
+            final var input = "a";
+
+            final var result = parser.tryParse(input);
+
+            final var remaining = new Remaining(1, input);
+            assertThat(result).hasValue(new IntSuccess(input.charAt(0), remaining));
+        }
     }
 }

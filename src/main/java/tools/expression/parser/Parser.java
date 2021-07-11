@@ -19,7 +19,9 @@ public interface Parser<T> {
     }
 
     static Parser<IntSuccess> item() {
-        return failure();
+        return input -> input.isEmpty()
+                ? Optional.empty()
+                : Optional.of(new IntSuccess(input.charAt(0), new Remaining(1, input)));
     }
 
     Optional<T> tryParse(String input);

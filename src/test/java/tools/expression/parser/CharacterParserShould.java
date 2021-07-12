@@ -57,6 +57,17 @@ public class CharacterParserShould {
         }
 
         @Test
+        void return_empty_with_index_equal_to_input_length() {
+            final var parser = CharacterParser.item();
+            final var input = "a";
+            final var index = 1;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).isEmpty();
+        }
+
+        @Test
         void return_first_character_and_remaining_when_input_is_not_empty() {
             final var parser = CharacterParser.item();
             final var input = "a";

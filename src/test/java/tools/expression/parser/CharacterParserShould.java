@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class CharacterParserShould {
 
     private static final String NULL_INPUT = null;
+    private static final String EMPTY_INPUT = "";
 
     @Nested
     class with_failure_parser {
@@ -50,7 +51,7 @@ public class CharacterParserShould {
         void return_empty_with_empty_input() {
             final var parser = CharacterParser.item();
 
-            final var result = parser.tryParse(0, "");
+            final var result = parser.tryParse(0, EMPTY_INPUT);
 
             assertThat(result).isEmpty();
         }

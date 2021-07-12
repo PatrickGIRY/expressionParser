@@ -97,7 +97,7 @@ public class CharacterParserShould {
         }
 
         @Test
-        void sequence_two_item_parser() {
+        void return_the_second_chararter_when_sequence_two_item_parser_with_an_input_of_length_é() {
             final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
 
             final var input = "ab";

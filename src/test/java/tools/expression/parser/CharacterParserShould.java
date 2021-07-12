@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CharacterParserShould {
 
+    private static final String NULL_INPUT = null;
+
     @Nested
     class with_failure_parser {
 
@@ -38,6 +40,36 @@ public class CharacterParserShould {
             final var result = parser.tryParse(index, input);
 
             assertThat(result).hasValue(codePoint);
+        }
+    }
+
+    @Nested
+    class  with_item_parser {
+
+        @Test
+        void return_empty_with_empty_input() {
+            final var parser = CharacterParser.item();
+
+            final var result = parser.tryParse(0, "");
+
+            assertThat(result).isEmpty();
+        }
+
+        @Test
+        void return_first_character_and_remaining_when_input_is_not_empty() {
+            final var parser = CharacterParser.item();
+            final var input = "a";
+
+            final var result = parser.tryParse(0, input);
+
+            assertThat(result).hasValue('a');
+        }
+
+        @Test
+        void throw_NullPointerException_when_input_is_null() {
+            final var parser = CharacterParser.item();
+
+            assertThatThrownBy(() -> parser.tryParse(0, NULL_INPUT)).isInstanceOf(NullPointerException.class);
         }
     }
 }

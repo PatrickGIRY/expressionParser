@@ -71,8 +71,9 @@ public class CharacterParserShould {
         void return_first_character_and_remaining_when_input_is_not_empty() {
             final var parser = CharacterParser.item();
             final var input = "a";
+            final var index = 0;
 
-            final var result = parser.tryParse(0, input);
+            final var result = parser.tryParse(index, input);
 
             assertThat(result).hasValue('a');
         }

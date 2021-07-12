@@ -1,6 +1,5 @@
 package tools.expression.parser;
 
-import java.util.Objects;
 import java.util.OptionalInt;
 
 import static java.util.Objects.requireNonNull;

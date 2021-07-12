@@ -8,5 +8,9 @@ public interface CharacterParser {
         return (index, input) -> OptionalInt.empty();
     }
 
+    static CharacterParser valueOf(int codePoint) {
+        return (index, input) -> OptionalInt.of(codePoint);
+    }
+
     OptionalInt tryParse(int index, String input);
 }

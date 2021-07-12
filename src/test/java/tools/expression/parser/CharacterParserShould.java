@@ -95,5 +95,17 @@ public class CharacterParserShould {
 
             assertThatThrownBy(() -> parser.tryParse(0, NULL_INPUT)).isInstanceOf(NullPointerException.class);
         }
+
+        @Test
+        void sequence_two_item_parser() {
+            final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
+
+            final var input = "ab";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).hasValue('b');
+        }
     }
 }

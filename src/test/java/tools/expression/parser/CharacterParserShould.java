@@ -97,7 +97,7 @@ public class CharacterParserShould {
         }
 
         @Test
-        void return_the_second_chararter_when_sequence_two_item_parser_with_an_input_of_length_é() {
+        void return_the_second_chararter_when_sequence_two_item_parser_with_an_input_of_length_2() {
             final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
 
             final var input = "ab";
@@ -106,6 +106,30 @@ public class CharacterParserShould {
             final var result = parser.tryParse(index, input);
 
             assertThat(result).hasValue('b');
+        }
+
+        @Test
+        void return_rmpty_when_sequence_two_item_parser_with_an_input_of_length_1() {
+            final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).isEmpty();
+        }
+
+        @Test
+        void return_rmpty_when_sequence_two_item_parser_with_an_input_of_length_0() {
+            final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
+
+            final var input = "";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).isEmpty();
         }
     }
 }

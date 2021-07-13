@@ -3,6 +3,8 @@ package tools.expression.parser;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.IntPredicate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -10,6 +12,7 @@ public class CharacterParserShould {
 
     private static final String NULL_INPUT = null;
     private static final String EMPTY_INPUT = "";
+    private static final IntPredicate NULL_PREDICATE = null;
 
     @Nested
     class with_failure_parser {
@@ -142,6 +145,13 @@ public class CharacterParserShould {
             final var result = parser.tryParse(index, input);
 
             assertThat(result).hasValue(input.charAt(index));
+        }
+
+        @Test
+        void throw_NullPointerException_when_predicate_is_null() {
+
+            assertThatThrownBy(() -> CharacterParser.item().satisfy(NULL_PREDICATE))
+                    .isInstanceOf(NullPointerException.class);
         }
 
         @Test

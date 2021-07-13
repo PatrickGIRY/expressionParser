@@ -27,7 +27,6 @@ public interface CharacterParser {
     OptionalInt tryParse(int index, String input);
 
     default  CharacterParser flatMap(IntFunction<CharacterParser> mapper) {
-
         return (index, input) -> {
             final var result1 = tryParse(index, input);
             return result1.isPresent() ? mapper.apply(result1.getAsInt()).tryParse(index + 1, input) : result1;
@@ -36,5 +35,9 @@ public interface CharacterParser {
 
     default CharacterParser satisfy(IntPredicate predicate) {
         return flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
+    }
+
+    default CharacterParser character(int expectedCodePoint) {
+        return satisfy(c -> c == expectedCodePoint);
     }
 }

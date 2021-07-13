@@ -133,7 +133,7 @@ public class CharacterParserShould {
         }
 
         @Test
-        void return_the_character_at_index_position_when_thr_predicate_is_true() {
+        void return_the_character_at_the_index_position_when_the_predicate_is_true() {
            final var parser = CharacterParser.item().satisfy(__ -> true);
 
             final var input = "a";
@@ -145,7 +145,7 @@ public class CharacterParserShould {
         }
 
         @Test
-        void return_empty_when_thr_predicate_is_false() {
+        void return_empty_when_the_predicate_is_false() {
            final var parser = CharacterParser.item().satisfy(__ -> false);
 
             final var input = "a";
@@ -154,6 +154,18 @@ public class CharacterParserShould {
             final var result = parser.tryParse(index, input);
 
             assertThat(result).isEmpty();
+        }
+
+        @Test
+        void return_the_character_at_the_index_position_when_it_matches_the_expected_one() {
+            final var parser = CharacterParser.item().character('a');
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).hasValue(input.charAt(index));
         }
     }
 }

@@ -131,5 +131,29 @@ public class CharacterParserShould {
 
             assertThat(result).isEmpty();
         }
+
+        @Test
+        void return_the_character_at_index_position_when_thr_predicate_is_true() {
+           final var parser = CharacterParser.item().satisfy(__ -> true);
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).hasValue(input.charAt(index));
+        }
+
+        @Test
+        void return_empty_when_thr_predicate_is_false() {
+           final var parser = CharacterParser.item().satisfy(__ -> false);
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).isEmpty();
+        }
     }
 }

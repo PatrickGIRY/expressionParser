@@ -2,6 +2,7 @@ package tools.expression.parser;
 
 import java.util.OptionalInt;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 
 import static java.util.Objects.requireNonNull;
 
@@ -31,5 +32,9 @@ public interface CharacterParser {
             final var result1 = tryParse(index, input);
             return result1.isPresent() ? mapper.apply(result1.getAsInt()).tryParse(index + 1, input) : result1;
         };
+    }
+
+    default CharacterParser satisfy(IntPredicate predicate) {
+        return flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
     }
 }

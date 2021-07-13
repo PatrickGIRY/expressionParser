@@ -96,7 +96,9 @@ public class CharacterParserShould {
         void throw_NullPointerException_when_input_is_null() {
             final var parser = CharacterParser.item();
 
-            assertThatThrownBy(() -> parser.tryParse(0, NULL_INPUT)).isInstanceOf(NullPointerException.class);
+            assertThatThrownBy(() -> parser.tryParse(0, NULL_INPUT))
+                    .isInstanceOf(NullPointerException.class)
+                    .hasMessage("input required");
         }
 
         @Test

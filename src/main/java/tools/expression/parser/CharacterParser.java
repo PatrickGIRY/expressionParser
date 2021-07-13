@@ -18,7 +18,7 @@ public interface CharacterParser {
 
     static CharacterParser item() {
         return (index, input) -> {
-            requireNonNull(input);
+            requireNonNull(input, "input required");
             final var inputLength = input.length();
             return inputLength > 0 && index < inputLength ? OptionalInt.of(input.charAt(index)) : OptionalInt.empty();
         };

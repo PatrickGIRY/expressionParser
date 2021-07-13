@@ -34,7 +34,7 @@ public interface CharacterParser {
     }
 
     default CharacterParser satisfy(IntPredicate predicate) {
-        requireNonNull(predicate);
+        requireNonNull(predicate, "predicate required");
         return flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
     }
 

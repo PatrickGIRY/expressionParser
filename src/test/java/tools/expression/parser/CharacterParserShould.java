@@ -151,7 +151,8 @@ public class CharacterParserShould {
         void throw_NullPointerException_when_predicate_is_null() {
 
             assertThatThrownBy(() -> CharacterParser.item().satisfy(NULL_PREDICATE))
-                    .isInstanceOf(NullPointerException.class);
+                    .isInstanceOf(NullPointerException.class)
+                    .hasMessage("predicate required");
         }
 
         @Test

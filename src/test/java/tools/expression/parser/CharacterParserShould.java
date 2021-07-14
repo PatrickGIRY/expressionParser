@@ -207,5 +207,17 @@ public class CharacterParserShould {
 
             assertThat(result).hasValue("z");
         }
+
+        @Test
+        void transform_character_parser_result_to_empty_object_parser_when_the_first_one_fail() {
+            final var parser = CharacterParser.failure().mapToObj(c -> "" + (char) c);
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).isEmpty();
+        }
     }
 }

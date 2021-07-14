@@ -46,8 +46,7 @@ public interface CharacterParser {
     default <R> Parser<R> mapToObj(IntFunction<R> mapper) {
         return (index, input) -> {
             final var result = tryParse(index, input);
-            return Optional.of(mapper.apply(result.getAsInt()));
-
+            return result.isPresent() ? Optional.of(mapper.apply(result.getAsInt())) : Optional.empty();
         };
     }
 }

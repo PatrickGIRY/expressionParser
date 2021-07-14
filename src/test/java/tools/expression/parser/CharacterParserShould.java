@@ -193,4 +193,19 @@ public class CharacterParserShould {
             assertThat(result).hasValue(input.charAt(index));
         }
     }
+
+    @Nested
+    class with_mapToObj {
+        @Test
+        void transform_character_parser_result_to_object_parser_when_the_first_one_is_successfull() {
+            final var parser = CharacterParser.valueOf('z').mapToObj(c -> "" + (char) c);
+
+            final var input = "a";
+            final var index = 0;
+
+            final var result = parser.tryParse(index, input);
+
+            assertThat(result).hasValue("z");
+        }
+    }
 }

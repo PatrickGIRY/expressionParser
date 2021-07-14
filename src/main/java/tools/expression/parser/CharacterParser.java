@@ -25,15 +25,6 @@ public interface CharacterParser {
         };
     }
 
-    OptionalInt tryParse(int index, String input);
-
-    default  CharacterParser flatMap(IntFunction<CharacterParser> mapper) {
-        return (index, input) -> {
-            final var result1 = tryParse(index, input);
-            return result1.isPresent() ? mapper.apply(result1.getAsInt()).tryParse(index + 1, input) : result1;
-        };
-    }
-
     static CharacterParser satisfy(IntPredicate predicate) {
         requireNonNull(predicate, "predicate required");
         return item().flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
@@ -41,5 +32,22 @@ public interface CharacterParser {
 
     static CharacterParser character(int expectedCodePoint) {
         return satisfy(c -> c == expectedCodePoint);
+    }
+
+    OptionalInt tryParse(int index, String input);
+
+    default CharacterParser flatMap(IntFunction<CharacterParser> mapper) {
+        return (index, input) -> {
+            final var result1 = tryParse(index, input);
+            return result1.isPresent() ? mapper.apply(result1.getAsInt()).tryParse(index + 1, input) : result1;
+        };
+    }
+
+    default <R> Parser<R> mapToObj(IntFunction<R> mapper) {
+        return (index, input) -> {
+            final var result = tryParse(index, input);
+            return Optional.of(mapper.apply(result.getAsInt()));
+
+        };
     }
 }

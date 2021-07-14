@@ -1,5 +1,6 @@
 package tools.expression.parser;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -35,7 +36,7 @@ public interface CharacterParser {
 
     default CharacterParser satisfy(IntPredicate predicate) {
         requireNonNull(predicate, "predicate required");
-        return flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
+        return item().flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
     }
 
     default CharacterParser character(int expectedCodePoint) {

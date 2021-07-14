@@ -82,7 +82,7 @@ public class CharacterParserShould {
         }
 
         @Test
-        void return_first_character_and_remaining_when_input_is_not_empty() {
+        void return_character_at_the_index_position_when_the_index_position_is_in_input() {
             final var parser = CharacterParser.item();
             final var input = "a";
             final var index = 0;
@@ -100,17 +100,21 @@ public class CharacterParserShould {
                     .isInstanceOf(NullPointerException.class)
                     .hasMessage("input required");
         }
+    }
 
+    @Nested
+    class with_flatMap {
         @Test
-        void return_the_second_chararter_when_sequence_two_item_parsers_with_an_input_of_length_2() {
-            final var parser = CharacterParser.item().flatMap(c -> CharacterParser.item());
+        void return_the_result_of_the_second_parser_when_the_first_one_is_successful() {
+            final var parser = CharacterParser.valueOf('y')
+                    .flatMap(__ -> CharacterParser.valueOf('z'));
 
             final var input = "ab";
             final var index = 0;
 
             final var result = parser.tryParse(index, input);
 
-            assertThat(result).hasValue('b');
+            assertThat(result).hasValue('z');
         }
 
         @Test

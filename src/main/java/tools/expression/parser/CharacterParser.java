@@ -39,7 +39,7 @@ public interface CharacterParser {
         return item().flatMap(c -> predicate.test(c) ? valueOf(c) : failure());
     }
 
-    default CharacterParser character(int expectedCodePoint) {
+    static CharacterParser character(int expectedCodePoint) {
         return satisfy(c -> c == expectedCodePoint);
     }
 }

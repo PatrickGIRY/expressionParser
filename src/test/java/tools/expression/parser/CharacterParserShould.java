@@ -3,6 +3,7 @@ package tools.expression.parser;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +14,7 @@ public class CharacterParserShould {
     private static final String NULL_INPUT = null;
     private static final String EMPTY_INPUT = "";
     private static final IntPredicate NULL_PREDICATE = null;
+    private static final IntFunction<? extends Object> NULL_MAP_TO_OBJ_MAPPER = null;
 
     @Nested
     class with_failure_parser {
@@ -218,6 +220,14 @@ public class CharacterParserShould {
             final var result = parser.tryParse(index, input);
 
             assertThat(result).isEmpty();
+        }
+
+        @Test
+        void throw_NullPointerException_when_mapper_is_null() {
+
+            assertThatThrownBy(() -> CharacterParser.valueOf('f').mapToObj(NULL_MAP_TO_OBJ_MAPPER))
+                    .isInstanceOf(NullPointerException.class)
+                    .hasMessage("mapper required");
         }
     }
 }

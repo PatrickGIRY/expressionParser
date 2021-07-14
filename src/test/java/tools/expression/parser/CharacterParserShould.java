@@ -141,9 +141,14 @@ public class CharacterParserShould {
             assertThat(result).isEmpty();
         }
 
+    }
+
+    @Nested
+    class with_satisfy {
+
         @Test
         void return_the_character_at_the_index_position_when_the_predicate_is_true() {
-           final var parser = CharacterParser.item().satisfy(__ -> true);
+           final var parser = CharacterParser.satisfy(__ -> true);
 
             final var input = "a";
             final var index = 0;
@@ -156,14 +161,14 @@ public class CharacterParserShould {
         @Test
         void throw_NullPointerException_when_predicate_is_null() {
 
-            assertThatThrownBy(() -> CharacterParser.item().satisfy(NULL_PREDICATE))
+            assertThatThrownBy(() -> CharacterParser.satisfy(NULL_PREDICATE))
                     .isInstanceOf(NullPointerException.class)
                     .hasMessage("predicate required");
         }
 
         @Test
         void return_empty_when_the_predicate_is_false() {
-           final var parser = CharacterParser.item().satisfy(__ -> false);
+           final var parser = CharacterParser.satisfy(__ -> false);
 
             final var input = "a";
             final var index = 0;

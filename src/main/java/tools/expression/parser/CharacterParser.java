@@ -37,6 +37,7 @@ public interface CharacterParser {
     OptionalInt tryParse(int index, String input);
 
     default CharacterParser flatMap(IntFunction<CharacterParser> mapper) {
+        requireNonNull(mapper, "mapper required");
         return (index, input) -> {
             final var result1 = tryParse(index, input);
             return result1.isPresent() ? mapper.apply(result1.getAsInt()).tryParse(index + 1, input) : result1;

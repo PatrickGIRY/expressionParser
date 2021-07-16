@@ -1,4 +1,10 @@
 package tools.expression.parser.ast;
 
-public record ASTNode<T>(ASTNodeType type, T value) {
+public sealed interface ASTNode<T> permits NumericLiteralNode {
+    static NumericLiteralNode numericLiteral(int value ) {
+       return new NumericLiteralNode(value);
+    }
+
+    ASTNodeType type();
+    T value();
 }

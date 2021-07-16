@@ -1,6 +1,6 @@
 package tools.expression.parser;
 
-import tools.expression.parser.ast.NumericLiteralNode;
+import tools.expression.parser.ast.ExpressionNode;
 import tools.expression.parser.production.Expression;
 import tools.expression.parser.production.NumericLiteral;
 
@@ -13,5 +13,5 @@ public interface Parser {
         return expression::apply;
     }
 
-   NumericLiteralNode parse(String text);
+   ExpressionNode parse(String text);
 }

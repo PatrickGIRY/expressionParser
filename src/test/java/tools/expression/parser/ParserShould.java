@@ -1,6 +1,8 @@
 package tools.expression.parser;
 
 import org.junit.jupiter.api.Test;
+import tools.expression.parser.ast.ASTNode;
+import tools.expression.parser.ast.ASTNodeType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,6 +15,6 @@ public class ParserShould {
 
         final var ast = parser.parse(text);
 
-        assertThat(ast).isEqualTo(new ASTNode<>(ProductionType.NUMERIC_LITERAL, 42));
+        assertThat(ast).isEqualTo(new ASTNode<>(ASTNodeType.NUMERIC_LITERAL, 42));
     }
 }

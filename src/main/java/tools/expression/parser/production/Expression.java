@@ -1,4 +1,6 @@
-package tools.expression.parser;
+package tools.expression.parser.production;
+
+import tools.expression.parser.ast.ASTNode;
 
 import java.util.function.Function;
 

@@ -1,7 +1,6 @@
 package tools.expression.parser.production;
 
 import tools.expression.parser.ast.ASTNode;
-import tools.expression.parser.ast.ASTNodeType;
 import tools.expression.parser.ast.NumericLiteralNode;
 
 import java.util.function.Function;

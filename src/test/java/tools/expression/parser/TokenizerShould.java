@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class TokenizerShould {
 
     private static final String INPUT_WITH_STRING_TO_YOKENIZE = "string to yokenize";
+    private static final String NO_MORE_TOKEN_INTO_InPUT = "";
 
     private Tokenizer tokenizer;
 
@@ -24,5 +25,14 @@ public class TokenizerShould {
                 () -> assertThat(tokenizer.input()).isEqualTo(INPUT_WITH_STRING_TO_YOKENIZE),
                 () -> assertThat(tokenizer.cursorIndex()).isEqualTo(0)
         );
+    }
+
+    @Test
+    void return_empty_when_input_has_no_more_token() {
+        tokenizer = Tokenizer.createAndInit(NO_MORE_TOKEN_INTO_InPUT);
+
+        final var nextToken = tokenizer.nextToken();
+
+        assertThat(nextToken).isEmpty();
     }
 }

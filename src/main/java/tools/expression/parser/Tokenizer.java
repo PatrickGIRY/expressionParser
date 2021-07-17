@@ -1,5 +1,7 @@
 package tools.expression.parser;
 
+import java.util.Optional;
+
 public class Tokenizer {
     private final String input;
     private int cursorIndex;
@@ -19,5 +21,9 @@ public class Tokenizer {
 
     public int cursorIndex() {
         return this.cursorIndex;
+    }
+
+    public Optional<?> nextToken() {
+        return Optional.empty();
     }
 }

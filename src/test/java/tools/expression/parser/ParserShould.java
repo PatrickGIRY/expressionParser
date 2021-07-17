@@ -24,7 +24,7 @@ public class ParserShould {
     }
 
     @Test
-    void throw_IllegalStateException_when_it_id_the_end_fo_input_and_expected_a_token_type() {
+    void throw_IllegalStateException_when_it_is_the_end_of_input_and_expected_a_token_type() {
         final var parser = Parser.create();
         final var text = "";
 
@@ -32,4 +32,14 @@ public class ParserShould {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Unexpected end of input, expected: \"NUMBER\"");
     }
+
+    /*@Test
+    void throw_IllegalStateException_when_it_is_not_the_expected_token_type() {
+        final var parser = Parser.create();
+        final var text = "foo";
+
+        assertThatThrownBy(() -> parser.parse(text))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Unexpected end of input, expected: \"NUMBER\"");
+    }*/
 }

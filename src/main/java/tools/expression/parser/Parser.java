@@ -1,16 +1,18 @@
 package tools.expression.parser;
 
-import tools.expression.parser.ast.ASTNode;
-import tools.expression.parser.production.NumericLiteral;
-
 @FunctionalInterface
 public interface Parser {
     static Parser create() {
-        final var  expression = tools.expression.parser.production.Expression.create(
-                NumericLiteral.create()
-        );
-        return expression::apply;
+       return Parser::expression;
     }
 
-   ASTNode.Expression parse(String text);
+    ASTNode.Expression parse(String text);
+
+    private static ASTNode.Expression expression(String text) {
+        return  ASTNode.expression(numericLiteral(text));
+    }
+
+    private static ASTNode.NumericLiteral numericLiteral(String text) {
+        return ASTNode.numericLiteral(Integer.parseInt(text));
+    }
 }

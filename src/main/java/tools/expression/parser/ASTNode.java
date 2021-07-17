@@ -1,4 +1,4 @@
-package tools.expression.parser.ast;
+package tools.expression.parser;
 
 import java.util.Objects;
 

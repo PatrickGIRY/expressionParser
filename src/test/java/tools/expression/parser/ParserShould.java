@@ -1,8 +1,6 @@
 package tools.expression.parser;
 
 import org.junit.jupiter.api.Test;
-import tools.expression.parser.ast.ASTNode;
-import tools.expression.parser.ast.ASTNodeType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

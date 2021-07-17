@@ -9,6 +9,7 @@ public class TokenizerShould {
 
     private static final String INPUT_WITH_STRING_TO_YOKENIZE = "string to yokenize";
     private static final String NO_MORE_TOKEN_INTO_InPUT = "";
+    private static final String NUMBER_INPUT = "42";
 
     @Test
     void create_with_input_text_and_initialier_cursor_index_to_zero() {
@@ -28,5 +29,14 @@ public class TokenizerShould {
         final var nextToken = tokenizer.nextToken();
 
         assertThat(nextToken).isEmpty();
+    }
+
+    @Test
+    void return_a_token_of_type_number_when_input_start_by_a_number() {
+        final var tokenizer = Tokenizer.createAndInit(NUMBER_INPUT);
+
+        final var nextToken = tokenizer.nextToken();
+
+        assertThat(nextToken).hasValue(new Token(TokenType.NUMBER, "42"));
     }
 }

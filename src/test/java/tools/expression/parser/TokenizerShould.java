@@ -9,7 +9,7 @@ public class TokenizerShould {
 
     @Test
     void create_with_input_text_and_initialier_cursor_index_to_zero() {
-        final var input = "string yo yokenize";
+        final var input = "string to yokenize";
         final var tokenizer = Tokenizer.createAndInit(input);
 
         assertAll(

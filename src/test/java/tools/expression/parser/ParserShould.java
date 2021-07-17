@@ -16,9 +16,7 @@ public class ParserShould {
 
         assertAll(
                 () -> assertThat(ast).isNotNull(),
-                () -> assertThat(ast.type()).isEqualTo(ASTNodeType.EXPRESSION),
                 () -> assertThat(ast.body()).isNotNull(),
-                () -> assertThat(ast.body().type()).isEqualTo(ASTNodeType.NUMERIC_LITERAL),
                 () -> assertThat(ast.body().value()).isEqualTo(42)
         );
 

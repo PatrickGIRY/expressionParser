@@ -10,21 +10,9 @@ public sealed interface ASTNode {
        return new NumericLiteral(value);
     }
 
-    ASTNodeType type();
-
     record Expression(NumericLiteral body) implements ASTNode {
-
-        @Override
-        public ASTNodeType type() {
-            return ASTNodeType.EXPRESSION;
-        }
     }
 
     record NumericLiteral(int value) implements ASTNode {
-
-        @Override
-        public ASTNodeType type() {
-            return ASTNodeType.NUMERIC_LITERAL;
-        }
     }
 }

@@ -1,18 +1,38 @@
 package tools.expression.parser;
 
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public sealed interface ASTNode {
-    static Expression expression(NumericLiteral body) {
-        return new Expression(body);
+    static BinaryExpression binaryExpression(Expression left, Operator operator, Expression right) {
+        return new BinaryExpression(left, operator, right);
     }
 
     static NumericLiteral numericLiteral(int value) {
        return new NumericLiteral(value);
     }
 
-    record Expression(NumericLiteral body) implements ASTNode {
+    static Operator operator(String sign) {
+        return Arrays.stream(Operator.values()).filter(operator -> Objects.equals(operator.sign, sign))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Unexpected sign '" + sign + "'"));
     }
 
-    record NumericLiteral(int value) implements ASTNode {
+    sealed interface Expression extends ASTNode { }
+
+    record BinaryExpression(Expression left, Operator operator, Expression right) implements Expression {}
+
+    record NumericLiteral(int value) implements Expression {}
+
+    enum Operator {
+        ADDITION("+"),
+        MULTIPLICATION("*");
+
+        public final String sign;
+
+        Operator(String sign) {
+            this.sign = sign;
+        }
     }
 }

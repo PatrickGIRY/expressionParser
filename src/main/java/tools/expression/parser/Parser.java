@@ -24,12 +24,16 @@ public interface Parser {
         static  TokenConsumer create(Tokenizer tokenizer) {
             return tokenType -> {
                 final var maybeToken = tokenizer.nextToken();
-                final var token = maybeToken
-                        .orElseThrow(() -> new IllegalStateException("Unexpected end of input, expected: \"" + tokenType + "\""));
-                if (!Objects.equals(token.type(), tokenType)) {
-                    throw new IllegalStateException("Unexpected token " + token.value() +  "expected: \"" + tokenType + "\"");
+                if (maybeToken.isPresent()) {
+                    final var token = maybeToken.get();
+                    if (Objects.equals(token.type(), tokenType)) {
+                        return token;
+                    } else {
+                        throw new IllegalStateException("Unexpected token " + token.value() +  "expected: \"" + tokenType + "\"");
+                    }
+                } else {
+                    throw new IllegalStateException("Unexpected end of input, expected: \"" + tokenType + "\"");
                 }
-                return token;
             };
         }
 

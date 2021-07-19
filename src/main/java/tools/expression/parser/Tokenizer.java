@@ -25,12 +25,16 @@ public class Tokenizer {
 
     public Optional<Token> nextToken() {
         if (hasMoreToken()) {
-            final var remaining = this.input.substring(cursorIndex);
-            if (Character.isDigit(remaining.charAt(0))) {
+            final var currentCharacter = input.charAt(cursorIndex);
+            if (currentCharacter == '+'  || currentCharacter == '*') {
+                cursorIndex++;
+                return Optional.of(new Token(TokenType.OPERATOR, "" + currentCharacter));
+            }
+            if (Character.isDigit(currentCharacter)) {
                 StringBuilder number = new StringBuilder();
-                final var remainingLength = remaining.length();
-                while (cursorIndex < remainingLength && Character.isDigit(remaining.charAt(cursorIndex))) {
-                    number.append(remaining.charAt(cursorIndex++));
+                final var inputLength = input.length();
+                while (cursorIndex < inputLength && Character.isDigit(input.charAt(cursorIndex))) {
+                    number.append(input.charAt(cursorIndex++));
                 }
                 return Optional.of(new Token(TokenType.NUMBER, number.toString()));
             }

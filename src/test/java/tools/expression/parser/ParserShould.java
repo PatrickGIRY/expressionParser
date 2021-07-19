@@ -9,17 +9,34 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class ParserShould {
 
     @Test
-    void return_a_numeric_literal_ast_from_a_text() {
+    void return_a_binary_expression_ast_from_a_text() {
         final var parser = Parser.create();
-        final var text = "42";
+        final var text = "35+46";
 
-        final ASTNode.Expression ast = parser.parse(text);
+        final var expression = parser.parse(text);
 
         assertAll(
-                () -> assertThat(ast).isNotNull(),
-                () -> assertThat(ast).isInstanceOf(ASTNode.NumericLiteral.class),
-                () -> assertThat(((ASTNode.NumericLiteral) ast).value()).isEqualTo(42)
+                () -> assertThat(expression).isNotNull(),
+                () -> assertThat(expression).isInstanceOf(ASTNode.BinaryExpression.class),
+                () -> assertThat(leftOf(expression)).isNotNull(),
+                () -> assertThat(leftOf(expression)).isInstanceOf(ASTNode.NumericLiteral.class),
+                () -> assertThat(valueOf(leftOf(expression))).isEqualTo(35),
+                () -> assertThat(rightOf(expression)).isNotNull(),
+                () -> assertThat(rightOf(expression)).isInstanceOf(ASTNode.NumericLiteral.class),
+                () -> assertThat(valueOf(rightOf(expression))).isEqualTo(46)
         );
+    }
+
+    static ASTNode.Expression leftOf(ASTNode.Expression expression) {
+        return ((ASTNode.BinaryExpression) expression).left();
+    }
+
+    static ASTNode.Expression rightOf(ASTNode.Expression expression) {
+        return ((ASTNode.BinaryExpression) expression).right();
+    }
+
+    static int valueOf(ASTNode.Expression expression) {
+        return ((ASTNode.NumericLiteral)expression).value();
     }
 
     @Test

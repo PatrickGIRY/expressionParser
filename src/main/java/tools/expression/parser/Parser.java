@@ -2,37 +2,41 @@ package tools.expression.parser;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 @FunctionalInterface
 public interface Parser {
     static Parser create() {
-       return text -> expression(TokenConsumer.create(Tokenizer.createAndInit(text)));
+        return text -> expression(TokenConsumer.create(Tokenizer.createAndInit(text)))
+                .orElseThrow(() -> new IllegalStateException("Expression: Unexpected expression production"));
     }
 
     ASTNode.Expression parse(String text);
 
-    private static ASTNode.Expression expression(TokenConsumer tokenConsumer) {
-        return tokenConsumer.eat(TokenType.NUMBER).<ASTNode.Expression>map(Parser::numericLiteral)
-        .or(() -> tokenConsumer.eat(TokenType.OPERATOR).map(Parser.binaryExpression(tokenConsumer)))
-                .orElseThrow(() -> new IllegalStateException("Expression: Unexpected expression production"));
+    private static Optional<ASTNode.Expression> expression(TokenConsumer tokenConsumer) {
+        final var maybeNumericLiteral = numericLiteral(tokenConsumer);
+        return maybeNumericLiteral
+                .flatMap(numericLiteral -> operator(tokenConsumer)
+                        .flatMap(operator -> numericLiteral(tokenConsumer)
+                                .<ASTNode.Expression>map(right -> ASTNode.binaryExpression(numericLiteral, operator, right))));
     }
 
-    private static Function<Token, ASTNode.BinaryExpression> binaryExpression(TokenConsumer tokenConsumer) {
-        return token -> ASTNode.binaryExpression(expression(tokenConsumer), operator(token), expression(tokenConsumer));
+    private static Optional<ASTNode.Operator> operator(TokenConsumer tokenConsumer) {
+        return tokenConsumer.eat(TokenType.OPERATOR)
+                .map(Token::value)
+                .map(ASTNode::operator);
     }
 
-    static ASTNode.Operator operator(Token token) {
-        return ASTNode.operator(token.value());
-    }
+    private static Optional<ASTNode.NumericLiteral> numericLiteral(TokenConsumer tokenConsumer) {
+        return tokenConsumer.eat(TokenType.NUMBER)
+                .map(Token::value)
+                .map(Integer::parseInt)
+                .map(ASTNode::numericLiteral);
 
-    private static ASTNode.NumericLiteral numericLiteral(Token token) {
-        return ASTNode.numericLiteral(Integer.parseInt(token.value()));
     }
 
     @FunctionalInterface
     interface TokenConsumer {
-        static  TokenConsumer create(Tokenizer tokenizer) {
+        static TokenConsumer create(Tokenizer tokenizer) {
             return tokenType -> {
                 final var maybeToken = tokenizer.nextToken();
                 if (maybeToken.isPresent()) {
@@ -40,7 +44,7 @@ public interface Parser {
                     if (Objects.equals(token.type(), tokenType)) {
                         return maybeToken;
                     } else {
-                        throw new IllegalStateException("Unexpected token " + token.value() +  "expected: \"" + tokenType + "\"");
+                        throw new IllegalStateException("Unexpected token '" + token.value() + "' expected: \"" + tokenType + "\"");
                     }
                 } else {
                     throw new IllegalStateException("Unexpected end of input, expected: \"" + tokenType + "\"");

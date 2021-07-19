@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class ParserShould {
 
     @Test
-    void return_an_ast_from_a_text() {
+    void return_an_numeric_literal_ast_from_a_text() {
         final var parser = Parser.create();
         final var text = "42";
 

@@ -20,7 +20,6 @@ public class ParserShould {
                 () -> assertThat(ast).isInstanceOf(ASTNode.NumericLiteral.class),
                 () -> assertThat(((ASTNode.NumericLiteral) ast).value()).isEqualTo(42)
         );
-
     }
 
     @Test

@@ -1,5 +1,6 @@
 package tools.expression.parser;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,9 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ParserShould {
 
+    private Parser parser;
+
+    @BeforeEach
+    void setUp() {
+        parser = Parser.create();
+    }
+
     @Test
     void return_a_binary_expression_ast_from_a_text() {
-        final var parser = Parser.create();
         final var text = "35 + 46";
 
         final var expression = parser.parse(text);
@@ -27,6 +34,14 @@ public class ParserShould {
         );
     }
 
+    @Test
+    void throw_IllegalStateException_when_binary_expression_is_incomplet() {
+        final var input = "12 +";
+        assertThatThrownBy(() -> parser.parse(input))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Unexpected end of input, expected: \"NUMBER\"");
+    }
+
     static ASTNode.Expression leftOf(ASTNode.Expression expression) {
         return ((ASTNode.BinaryExpression) expression).left();
     }
@@ -36,7 +51,7 @@ public class ParserShould {
     }
 
     static int valueOf(ASTNode.Expression expression) {
-        return ((ASTNode.NumericLiteral)expression).value();
+        return ((ASTNode.NumericLiteral) expression).value();
     }
 
     @Test

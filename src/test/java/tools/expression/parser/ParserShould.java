@@ -11,7 +11,7 @@ public class ParserShould {
     @Test
     void return_a_binary_expression_ast_from_a_text() {
         final var parser = Parser.create();
-        final var text = "35+46";
+        final var text = "35 + 46";
 
         final var expression = parser.parse(text);
 

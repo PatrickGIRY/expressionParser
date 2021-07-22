@@ -24,7 +24,7 @@ public class Tokenizer {
     }
 
     public Optional<Token> nextToken() {
-        if (hasMoreToken()) {
+        while (hasMoreToken()) {
             final var currentCharacter = input.charAt(cursorIndex);
             if (currentCharacter == '+'  || currentCharacter == '*') {
                 cursorIndex++;
@@ -38,6 +38,7 @@ public class Tokenizer {
                 }
                 return Optional.of(new Token(TokenType.NUMBER, number.toString()));
             }
+            cursorIndex++;
         }
         return Optional.empty();
     }

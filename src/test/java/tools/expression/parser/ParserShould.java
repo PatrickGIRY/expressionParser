@@ -37,7 +37,9 @@ public class ParserShould {
     }
 
     @ParameterizedTest
-    @CsvSource(delimiter = ';' , value = "12 +; Unexpected end of input, expected: \"NUMBER\"")
+    @CsvSource(delimiter = ';', value = {
+            "12 +; Unexpected end of input, expected: \"NUMBER\"",
+            "12 ; Unexpected end of input, expected: \"OPERATOR\""})
     void throw_IllegalStateException_when_binary_expression_is_incompete(String incompleteInput, String errorMessage) {
         assertThatThrownBy(() -> parser.parse(incompleteInput))
                 .isInstanceOf(IllegalStateException.class)

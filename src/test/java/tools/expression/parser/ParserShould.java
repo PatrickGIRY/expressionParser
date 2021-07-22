@@ -2,6 +2,8 @@ package tools.expression.parser;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,12 +36,12 @@ public class ParserShould {
         );
     }
 
-    @Test
-    void throw_IllegalStateException_when_binary_expression_is_incomplet() {
-        final var input = "12 +";
-        assertThatThrownBy(() -> parser.parse(input))
+    @ParameterizedTest
+    @CsvSource(delimiter = ';' , value = "12 +; Unexpected end of input, expected: \"NUMBER\"")
+    void throw_IllegalStateException_when_binary_expression_is_incompete(String incompleteInput, String errorMessage) {
+        assertThatThrownBy(() -> parser.parse(incompleteInput))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Unexpected end of input, expected: \"NUMBER\"");
+                .hasMessage(errorMessage);
     }
 
     static ASTNode.Expression leftOf(ASTNode.Expression expression) {

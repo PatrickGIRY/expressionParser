@@ -6,15 +6,14 @@ import java.util.Optional;
 @FunctionalInterface
 public interface Parser {
     static Parser create() {
-        return text -> expression(TokenConsumer.create(Tokenizer.createAndInit(text)))
+        return text -> binaryExpression(TokenConsumer.create(Tokenizer.createAndInit(text)))
                 .orElseThrow(() -> new IllegalStateException("Expression: Unexpected expression production"));
     }
 
     ASTNode.Expression parse(String text);
 
-    private static Optional<ASTNode.Expression> expression(TokenConsumer tokenConsumer) {
-        final var maybeNumericLiteral = numericLiteral(tokenConsumer);
-        return maybeNumericLiteral
+    private static Optional<ASTNode.Expression> binaryExpression(TokenConsumer tokenConsumer) {
+        return numericLiteral(tokenConsumer)
                 .flatMap(numericLiteral -> operator(tokenConsumer)
                         .flatMap(operator -> numericLiteral(tokenConsumer)
                                 .<ASTNode.Expression>map(right -> ASTNode.binaryExpression(numericLiteral, operator, right))));
